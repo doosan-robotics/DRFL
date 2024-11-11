@@ -373,7 +373,7 @@ namespace DRAFramework
         DRFL_API bool _flange_serial_open(LPROBOTCONTROL pCtrl, int baudrate = 115200, BYTE_SIZE eByteSize = BYTE_SIZE_EIGHTBITS, PARITY_CHECK eParity = PARITY_CHECK_NONE, STOP_BITS eStopBits = STOPBITS_ONE);
         DRFL_API bool _flange_serial_close(LPROBOTCONTROL pCtrl);
         DRFL_API bool _flange_serial_write(LPROBOTCONTROL pCtrl, int nSize, char* pSendData, int nPort = 1);
-        DRFL_API LPFLANGE_SER_RXD_INFO_EX _flange_serial_read(LPROBOTCONTROL pCtrl, float fTimeout = -1, int nPort = 1);     
+        DRFL_API LPFLANGE_SER_RXD_INFO _flange_serial_read(LPROBOTCONTROL pCtrl, float fTimeout = -1, int nPort = 1);     
   
         ////////////////////////////////////////////////////////////////////////////
         //  Configuration Operations                                              //
@@ -777,7 +777,7 @@ namespace DRAFramework
         bool flange_serial_open(int baudrate = 115200, BYTE_SIZE eByteSize = BYTE_SIZE_EIGHTBITS, PARITY_CHECK eParity = PARITY_CHECK_NONE, STOP_BITS eStopBits = STOPBITS_ONE){ return _flange_serial_open(_rbtCtrl, baudrate, eByteSize, eParity, eStopBits); };
         bool flange_serial_close(){ return _flange_serial_close(_rbtCtrl); };
         bool flange_serial_write(int nSize, char* pSendData, int nPort = 1){ return _flange_serial_write(_rbtCtrl, nSize, pSendData, nPort); };
-        LPFLANGE_SER_RXD_INFO_EX flange_serial_read(float fTimeout = -1, int nPort = 1){ return _flange_serial_read(_rbtCtrl, fTimeout, nPort); };      
+        LPFLANGE_SER_RXD_INFO flange_serial_read(float fTimeout = -1, int nPort = 1){ return _flange_serial_read(_rbtCtrl, fTimeout, nPort); };      
 
         ////////////////////////////////////////////////////////////////////////////
         //  Configuration Operations                                               //
