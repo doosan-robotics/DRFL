@@ -1,43 +1,67 @@
-# How to bulid
-
-This document describes the Windows/Linux build method of DRFL (Doosan Robotics Framework Library).
-The manual can be found at the link below.
-
-[Manual](https://manual.doosanrobotics.com/en/api/1.29/Publish/)
-
-## Environment
-
-Please refer to below link.
-
-### [Composition of Library](https://manual.doosanrobotics.com/help/api/latest/publish/en_us/composition-of-library-36471066.html)
-### [Recommended Operational Specification](https://manual.doosanrobotics.com/help/api/latest/publish/en_us/recommended-operational-specification-50890483.html)
-
-> DRFL only works on the x86 architecture.
-
-## Build Instruction
-The library files (.a, .dll, etc.) included in this repository are library files for examples and may not be the latest version. 
-The latest version of DRFL can be downloaded from the link below.
-[Download Site](https://robotlab.doosanrobotics.com/en/board/Resources/Software/b1093461-88c9-eb11-bacc-000d3aa2bc06?pageId=864ff7c8-5545-e911-a824-000d3a07f6fe&searchKeyword=)
-
-### Windows
-
-The link below is a link to the solution file for using the windows example.
-
-[Visual Studio 2010 Solution](https://github.com/doosan-robotics/API-DRFL/blob/main/example/Windows/windows_example/windows_example.sln)
+Copyright © 2024 Doosan Robotics Inc
 
 
-### Linux(64bits)
+# Build Instructions for DRFL (Doosan Robotics Framework Library)
 
-#### Ubuntu 20.04
+This document outlines the procedure for building the DRFL on Windows and Linux platforms. For detailed instructions, please refer to the official manual linked below:
 
-1. Build with g++ in the example directory
-`$ g++ -c main.cpp`
-2.	If main.o is created normally, enter the command below to create an example file
+[DRFL Manual](https://manual.doosanrobotics.com/en/api/)
 
-`$ g++ -o drfl_test main.o ../../library/Linux/64bits/20.04/libDRFL.a /usr/lib/x86_64-linux-gnu/libPocoFoundation.so /usr/lib/x86_64-linux-gnu/libPocoNet.so`
 
-3.	Check the build. When the build is complete, test the actual controller and connection.
+## System Requirements
 
-> The Poco library can be downloaded with the command below.
-> **$ sudo apt-get install libpoco-dev**
 
+> **Note**: DRFL is designed to operate on x86 architectures. Arm64 architecture is supported exclusively for Linux platforms.
+
+Please ensure your environment meets the following conditions:
+
+- **Library Composition**: Refer to the structure of the library via this [link](https://manual.doosanrobotics.com/help/api/latest/publish/en_us/composition-of-library-36471066.html).
+- **Recommended Specifications**: Review the recommended operational specifications [here](https://manual.doosanrobotics.com/help/api/latest/publish/en_us/recommended-operational-specification-50890483.html).
+
+
+## Build Guidelines
+The library files (.a, .dll, etc.) included in this repository are sample versions intended for demonstration purposes. To ensure you are using the latest release of DRFL, please download the current version from the following link:
+
+[Download Latest DRFL](https://robotlab.doosanrobotics.com/en/board/Resources/Software)
+
+### Windows (64-bit)
+
+To build the Windows example, utilize the Visual Studio 2015 solution file provided at the link below:
+
+[Windows Example Solution](https://github.com/doosan-robotics/API-DRFL/blob/main/example/Windows/windows_example/windows_example.sln)
+
+
+### Linux (64-bit)
+
+#### Ubuntu 
+
+> Ubuntu supports versions : 18.04, 20.04 and 22.04.
+
+1. Navigate to the example directory and compile using g++:
+   ```bash
+   g++ -c main.cpp
+2. Once main.o is created successfully, run the following command to generate the executable:
+
+    **x86(18.04)** 
+    ```bash
+    g++ -o drfl_test main.o ../../library/Linux/64bits/amd64/{your_ubuntu_version}/libDRFL.a /usr/lib/libPocoFoundation.so /usr/lib/libPocoNet.so
+    ```
+    **x86(20.04 or 22.04)** 
+    ```bash
+    g++ -o drfl_test main.o ../../library/Linux/64bits/amd64/{your_ubuntu_version}/libDRFL.a /usr/lib/x86_64-linux-gnu/libPocoFoundation.so /usr/lib/x86_64-linux-gnu/libPocoNet.so
+    ```
+    **Arm64(18.04)**
+    
+    ```bash
+    g++ -o drfl_test main.o ../../library/Linux/64bits/arn64/{your_ubuntu_version}/libDRFL.a /usr/lib/libPocoFoundation.so /usr/lib/libPocoNet.so
+    ```
+    **Arm64(20.04 or 22.04)**
+    
+    ```bash
+    g++ -o drfl_test main.o ../../library/Linux/64bits/arn64/{your_ubuntu_version}/libDRFL.a /usr/lib/aarch64-linux-gnu/libPocoFoundation.so /usr/lib/aarch64-linux-gnu/libPocoNet.so
+    ```
+
+3. Verify the build and, upon completion, proceed with testing the connection to the actual controller.
+
+    ```bash
+    sudo apt-get install libpoco-dev
