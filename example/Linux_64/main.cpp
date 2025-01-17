@@ -1,4 +1,4 @@
-// DRFTWin32.cpp : �ܼ� ���� ���α׷��� ���� �������� �����մϴ�.
+// DRFTWin32.cpp
 //
 
 #ifdef __XENO__
@@ -68,37 +68,37 @@ int getch()
     int c;
     struct termios oldattr, newattr;
 
-    tcgetattr(STDIN_FILENO, &oldattr);           // ���� �͹̳� ���� ����
+    tcgetattr(STDIN_FILENO, &oldattr);          
     newattr = oldattr;
-    newattr.c_lflag &= ~(ICANON | ECHO);         // CANONICAL�� ECHO ��
-    newattr.c_cc[VMIN] = 1;                      // �ּ� �Է� ���� ���� 1�� ����
-    newattr.c_cc[VTIME] = 0;                     // �ּ� �б� ��� �ð��� 0���� ����
-    tcsetattr(STDIN_FILENO, TCSANOW, &newattr);  // �͹̳ο� ���� �Է�
-    c = getchar();                               // Ű���� �Է� ����
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);  // ������ �������� ����
+    newattr.c_lflag &= ~(ICANON | ECHO);         
+    newattr.c_cc[VMIN] = 1;                      
+    newattr.c_cc[VTIME] = 0;                     
+    tcsetattr(STDIN_FILENO, TCSANOW, &newattr);  
+    c = getchar();                               
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldattr);  
     return c;
 }
 
 void OnTpInitializingCompleted() {
-  // Tp �ʱ�ȭ ���� ����� ��û.
+  // Tp.
   g_TpInitailizingComplted = TRUE;
   Drfl.ManageAccessControl(MANAGE_ACCESS_CONTROL_FORCE_REQUEST);
 }
 
 void OnHommingCompleted() {
-  // 50msec �̳� �۾��� ������ ��.
+  // 50msec 
   cout << "homming completed" << endl;
 }
 
 void OnProgramStopped(const PROGRAM_STOP_CAUSE) {
   assert(Drfl.PlayDrlStop(STOP_TYPE_SLOW));
-  // 50msec �̳� �۾��� ������ ��.
+  // 50msec
   // assert(Drfl.SetRobotMode(ROBOT_MODE_MANUAL));
   cout << "program stopped" << endl;
 }
 
 void OnMonitoringDataCB(const LPMONITORING_DATA pData) {
-  // 50msec �̳� �۾��� ������ ��.
+  // 50msec 
 
   return;
   cout << "# monitoring 0 data " << pData->_tCtrl._tTask._fActualPos[0][0]
@@ -150,10 +150,9 @@ void OnMonitoringCtrlIOEx2CB(const LPMONITORING_CTRLIO_EX2 pData) {
 }
 
 void OnMonitoringStateCB(const ROBOT_STATE eState) {
-  // 50msec �̳� �۾��� ������ ��.
+
   switch ((unsigned char)eState) {
-#if 0  // TP �ʱ�ȭ�� ����ϴ� ���������� API ���������� ������� ����.(TP����
-       // �ܵ� ����� ���, ���)
+#if 0  
     case STATE_NOT_READY:
         if (g_bHasControlAuthority) Drfl.SetRobotControl(CONTROL_INIT_CONFIG);
         break;
@@ -203,7 +202,6 @@ void OnMonitoringStateCB(const ROBOT_STATE eState) {
 
 void OnMonitroingAccessControlCB(
     const MONITORING_ACCESS_CONTROL eTrasnsitControl) {
-  // 50msec �̳� �۾��� ������ ��.
 
   switch (eTrasnsitControl) {
     case MONITORING_ACCESS_CONTROL_REQUEST:
@@ -395,7 +393,6 @@ void TrajectoryGenerator(PlanParam *plan, TraParam *tra)
 
 int main(int argc, char** argv) {
 
-  // �ݹ� ���(// �ݹ� �Լ� �������� 50msec �̳� �۾��� ������ ��)
   Drfl.set_on_homming_completed(OnHommingCompleted);
   Drfl.set_on_monitoring_data_ex(OnMonitoringDataExCB);
   #if DRCF_VERSION == 2
@@ -416,15 +413,13 @@ int main(int argc, char** argv) {
   Drfl.set_on_program_stopped(OnProgramStopped);
   Drfl.set_on_disconnected(OnDisConnected);
 
-  // ���� ����
   assert(Drfl.open_connection("192.168.137.100"));
 
-  // ���� ���� ȹ��
   SYSTEM_VERSION tSysVerion = {
       '\0',
   };
   Drfl.get_system_version(&tSysVerion);
-  // ����͸� ������ ���� ����
+  
   Drfl.setup_monitoring_version(1);
   Drfl.set_robot_control(CONTROL_SERVO_ON);
   Drfl.set_digital_output(GPIO_CTRLBOX_DIGITAL_INDEX_10, TRUE);
@@ -434,8 +429,6 @@ int main(int argc, char** argv) {
   while ((Drfl.get_robot_state() != STATE_STANDBY) || !g_bHasControlAuthority)
     // Sleep(1000);
     this_thread::sleep_for(std::chrono::milliseconds(1000));
-
-  // ���� ��� ����
 
   assert(Drfl.set_robot_mode(ROBOT_MODE_AUTONOMOUS));
   assert(Drfl.set_robot_system(ROBOT_SYSTEM_REAL));
