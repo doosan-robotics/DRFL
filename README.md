@@ -1,4 +1,4 @@
-Copyright © 2024 Doosan Robotics Inc
+Copyright © 2025 Doosan Robotics Inc
 
 
 # Build Instructions for DRFL (Doosan Robotics Framework Library)
