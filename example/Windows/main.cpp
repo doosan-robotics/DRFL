@@ -1,4 +1,4 @@
-// DRFTWin32.cpp : �ܼ� ���� ���α׷��� ���� �������� �����մϴ�.
+// DRFTWin32.cpp .
 //
 
 #include <Windows.h>
@@ -33,28 +33,28 @@ int mCnt = 0;
 
 void OnTpInitializingCompleted()
 {
-    // Tp �ʱ�ȭ ���� ����� ��û.
+    // Tp
     g_TpInitailizingComplted = TRUE;
     Drfl.ManageAccessControl(MANAGE_ACCESS_CONTROL_FORCE_REQUEST);
 }
 
 void OnHommingCompleted()
 {
-    // 50msec �̳� �۾��� ������ ��.
+    // 50msec
     cout << "homming completed" << endl;
 }
 
 void OnProgramStopped(const PROGRAM_STOP_CAUSE)
 {
     assert(Drfl.PlayDrlStop(STOP_TYPE_SLOW));
-    // 50msec �̳� �۾��� ������ ��.
+    // 50msec
     //assert(Drfl.SetRobotMode(ROBOT_MODE_MANUAL));
     cout << "program stopped" << endl;
 }
 
 void OnMonitoringDataCB(const LPMONITORING_DATA pData)
 {
-    // 50msec �̳� �۾��� ������ ��.
+    // 50msec
 
     return;
     cout << "# monitoring 0 data "
@@ -105,10 +105,10 @@ void OnMonitoringCtrlIOExCB(const LPMONITORING_CTRLIO_EX pData)
 
 void OnMonitoringStateCB(const ROBOT_STATE eState)
 {
-    // 50msec �̳� �۾��� ������ ��.
+    // 50msec 
     switch ((unsigned char)eState)
     {
-#if 0  // TP �ʱ�ȭ�� ����ϴ� ���������� API ���������� ������� ����.(TP���� �ܵ� ����� ���, ���)
+#if 0  // TP
     case STATE_NOT_READY:
         if (g_bHasControlAuthority) Drfl.SetRobotControl(CONTROL_INIT_CONFIG);
         break;
@@ -157,7 +157,7 @@ void OnMonitoringStateCB(const ROBOT_STATE eState)
 
 void OnMonitroingAccessControlCB(const MONITORING_ACCESS_CONTROL eTrasnsitControl)
 {
-    // 50msec �̳� �۾��� ������ ��.
+    // 50msec 
 
     switch (eTrasnsitControl)
     {
@@ -301,7 +301,6 @@ void OnDisConnected()
 
 int main()
 {
-    // �ݹ� ���(// �ݹ� �Լ� �������� 50msec �̳� �۾��� ������ ��)
     //Drfl.set_on_homming_completed(OnHommingCompleted);
     //Drfl.set_on_monitoring_data(OnMonitoringDataCB);
     //Drfl.set_on_monitoring_data_ex(OnMonitoringDataExCB);
@@ -324,10 +323,9 @@ int main()
     //Drfl.set_on_program_stopped(OnProgramStopped);
     //Drfl.set_on_disconnected(OnDisConnected);
 
-    // ���� ����
     assert(Drfl.open_connection("192.168.137.100"));
 
-    // ���� ���� ȹ��
+
     SYSTEM_VERSION tSysVerion = { '\0', };
     Drfl.get_system_version(&tSysVerion);
     // ����͸� ������ ���� ����
@@ -336,8 +334,6 @@ int main()
     Drfl.set_digital_output(GPIO_CTRLBOX_DIGITAL_INDEX_10, TRUE);
     cout << "System version: " << tSysVerion._szController << endl;
     cout << "Library version: " << Drfl.get_library_version() << endl;
-
-    // ���� ��� ����
 
 
     //Drfl.ConfigCreateModbus("mr1", "192.168.137.70", 552, MODBUS_REGISTER_TYPE_HOLDING_REGISTER, 3, 5);
