@@ -7,6 +7,22 @@ This document outlines the procedure for building the DRFL on Windows and Linux 
 
 [DRFL Manual](https://manual.doosanrobotics.com/en/api/)
 
+## DRCF Version Compatibility
+
+This code uses a preprocessor macro (`DRCF_VERSION`) to ensure compatibility with different versions of the Doosan Robot Controller Framework (DRCF). 
+
+**To specify your DRCF version:**
+
+* **For DRCF v2:** Set `DRCF_VERSION` to `2`.
+* **For DRCF v3:** Set `DRCF_VERSION` to `3`.
+
+**Example:**
+
+```c++
+#ifndef DRCF_VERSION
+    #define DRCF_VERSION 3 // Set to 3 for DRCF v3
+#endif
+```
 
 ## System Requirements
 
