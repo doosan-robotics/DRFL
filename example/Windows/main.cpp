@@ -1,11 +1,14 @@
-// DRFTWin32.cpp : ÄÜ¼Ö ÀÀ¿ë ÇÁ·Î±×·¥¿¡ ´ëÇÑ ÁøÀÔÁ¡À» Á¤ÀÇÇÕ´Ï´Ù.
+// DRFTWin32.cpp : ï¿½Ü¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î±×·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
 //
 
 #include <Windows.h>
 #include <iostream>
 #include <conio.h>
 #include <process.h>
-
+// Select your controller version v2(v2~) or v3(v3~)
+#ifndef DRCF_VERSION
+    #define DRCF_VERSION 2
+#endif
 #include "../../include/DRFLEx.h"
 using namespace DRAFramework;
 
@@ -30,28 +33,28 @@ int mCnt = 0;
 
 void OnTpInitializingCompleted()
 {
-    // Tp ÃÊ±âÈ­ ÀÌÈÄ Á¦¾î±Ç ¿äÃ».
+    // Tp ï¿½Ê±ï¿½È­ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã».
     g_TpInitailizingComplted = TRUE;
     Drfl.ManageAccessControl(MANAGE_ACCESS_CONTROL_FORCE_REQUEST);
 }
 
 void OnHommingCompleted()
 {
-    // 50msec ÀÌ³» ÀÛ¾÷¸¸ ¼öÇàÇÒ °Í.
+    // 50msec ï¿½Ì³ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
     cout << "homming completed" << endl;
 }
 
 void OnProgramStopped(const PROGRAM_STOP_CAUSE)
 {
     assert(Drfl.PlayDrlStop(STOP_TYPE_SLOW));
-    // 50msec ÀÌ³» ÀÛ¾÷¸¸ ¼öÇàÇÒ °Í.
+    // 50msec ï¿½Ì³ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
     //assert(Drfl.SetRobotMode(ROBOT_MODE_MANUAL));
     cout << "program stopped" << endl;
 }
 
 void OnMonitoringDataCB(const LPMONITORING_DATA pData)
 {
-    // 50msec ÀÌ³» ÀÛ¾÷¸¸ ¼öÇàÇÒ °Í.
+    // 50msec ï¿½Ì³ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
 
     return;
     cout << "# monitoring 0 data "
@@ -102,10 +105,10 @@ void OnMonitoringCtrlIOExCB(const LPMONITORING_CTRLIO_EX pData)
 
 void OnMonitoringStateCB(const ROBOT_STATE eState)
 {
-    // 50msec ÀÌ³» ÀÛ¾÷¸¸ ¼öÇàÇÒ °Í.
+    // 50msec ï¿½Ì³ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
     switch ((unsigned char)eState)
     {
-#if 0  // TP ÃÊ±âÈ­½Ã »ç¿ëÇÏ´Â ·ÎÁ÷ÀÓÀ¸·Î API ·¹º§¿¡¼­´Â »ç¿ëÇÏÁö ¸»°Í.(TP¾øÀÌ ´Üµ¶ »ç¿ëÀÏ °æ¿ì, »ç¿ë)
+#if 0  // TP ï¿½Ê±ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ API ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.(TPï¿½ï¿½ï¿½ï¿½ ï¿½Üµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½)
     case STATE_NOT_READY:
         if (g_bHasControlAuthority) Drfl.SetRobotControl(CONTROL_INIT_CONFIG);
         break;
@@ -154,7 +157,7 @@ void OnMonitoringStateCB(const ROBOT_STATE eState)
 
 void OnMonitroingAccessControlCB(const MONITORING_ACCESS_CONTROL eTrasnsitControl)
 {
-    // 50msec ÀÌ³» ÀÛ¾÷¸¸ ¼öÇàÇÒ °Í.
+    // 50msec ï¿½Ì³ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
 
     switch (eTrasnsitControl)
     {
@@ -298,7 +301,7 @@ void OnDisConnected()
 
 int main()
 {
-    // ÄÝ¹é µî·Ï(// ÄÝ¹é ÇÔ¼ö ³»¿¡¼­´Â 50msec ÀÌ³» ÀÛ¾÷¸¸ ¼öÇàÇÒ °Í)
+    // ï¿½Ý¹ï¿½ ï¿½ï¿½ï¿½(// ï¿½Ý¹ï¿½ ï¿½Ô¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 50msec ï¿½Ì³ï¿½ ï¿½Û¾ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½)
     //Drfl.set_on_homming_completed(OnHommingCompleted);
     //Drfl.set_on_monitoring_data(OnMonitoringDataCB);
     //Drfl.set_on_monitoring_data_ex(OnMonitoringDataExCB);
@@ -321,20 +324,20 @@ int main()
     //Drfl.set_on_program_stopped(OnProgramStopped);
     //Drfl.set_on_disconnected(OnDisConnected);
 
-    // ¿¬°á ¼ö¸³
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     assert(Drfl.open_connection("192.168.137.100"));
 
-    // ¹öÀü Á¤º¸ È¹µæ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È¹ï¿½ï¿½
     SYSTEM_VERSION tSysVerion = { '\0', };
     Drfl.get_system_version(&tSysVerion);
-    // ¸ð´ÏÅÍ¸µ µ¥ÀÌÅÍ ¹öÀü º¯°æ
+    // ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     assert(Drfl.setup_monitoring_version(1));
     Drfl.set_robot_control(CONTROL_SERVO_ON);
     Drfl.set_digital_output(GPIO_CTRLBOX_DIGITAL_INDEX_10, TRUE);
     cout << "System version: " << tSysVerion._szController << endl;
     cout << "Library version: " << Drfl.get_library_version() << endl;
 
-    // ¼öµ¿ ¸ðµå ¼³Á¤
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
     //Drfl.ConfigCreateModbus("mr1", "192.168.137.70", 552, MODBUS_REGISTER_TYPE_HOLDING_REGISTER, 3, 5);
@@ -407,7 +410,7 @@ int main()
             case EXAMPLE_GPIO:
                 cout << "reset gpio" << endl;
                 for (int i = 0; i < NUM_DIGITAL; i++) {
-                    assert(Drfl.SetCtrlBoxDigitalOutput((GPIO_CTRLBOX_DIGITAL_INDEX)i, FALSE));
+                    assert(Drfl.set_digital_output((GPIO_CTRLBOX_DIGITAL_INDEX)i, FALSE));
                 }
                 break;
             case EXAMPLE_MODBUS:
