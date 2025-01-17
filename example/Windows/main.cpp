@@ -1,11 +1,14 @@
-// DRFTWin32.cpp : 콘솔 응용 프로그램에 대한 진입점을 정의합니다.
+// DRFTWin32.cpp .
 //
 
 #include <Windows.h>
 #include <iostream>
 #include <conio.h>
 #include <process.h>
-
+// Select your controller version v2(v2~) or v3(v3~)
+#ifndef DRCF_VERSION
+    #define DRCF_VERSION 2
+#endif
 #include "../../include/DRFLEx.h"
 using namespace DRAFramework;
 
@@ -30,28 +33,28 @@ int mCnt = 0;
 
 void OnTpInitializingCompleted()
 {
-    // Tp 초기화 이후 제어권 요청.
+    // Tp
     g_TpInitailizingComplted = TRUE;
     Drfl.ManageAccessControl(MANAGE_ACCESS_CONTROL_FORCE_REQUEST);
 }
 
 void OnHommingCompleted()
 {
-    // 50msec 이내 작업만 수행할 것.
+    // 50msec
     cout << "homming completed" << endl;
 }
 
 void OnProgramStopped(const PROGRAM_STOP_CAUSE)
 {
     assert(Drfl.PlayDrlStop(STOP_TYPE_SLOW));
-    // 50msec 이내 작업만 수행할 것.
+    // 50msec
     //assert(Drfl.SetRobotMode(ROBOT_MODE_MANUAL));
     cout << "program stopped" << endl;
 }
 
 void OnMonitoringDataCB(const LPMONITORING_DATA pData)
 {
-    // 50msec 이내 작업만 수행할 것.
+    // 50msec
 
     return;
     cout << "# monitoring 0 data "
@@ -102,10 +105,10 @@ void OnMonitoringCtrlIOExCB(const LPMONITORING_CTRLIO_EX pData)
 
 void OnMonitoringStateCB(const ROBOT_STATE eState)
 {
-    // 50msec 이내 작업만 수행할 것.
+    // 50msec 
     switch ((unsigned char)eState)
     {
-#if 0  // TP 초기화시 사용하는 로직임으로 API 레벨에서는 사용하지 말것.(TP없이 단독 사용일 경우, 사용)
+#if 0  // TP
     case STATE_NOT_READY:
         if (g_bHasControlAuthority) Drfl.SetRobotControl(CONTROL_INIT_CONFIG);
         break;
@@ -154,7 +157,7 @@ void OnMonitoringStateCB(const ROBOT_STATE eState)
 
 void OnMonitroingAccessControlCB(const MONITORING_ACCESS_CONTROL eTrasnsitControl)
 {
-    // 50msec 이내 작업만 수행할 것.
+    // 50msec 
 
     switch (eTrasnsitControl)
     {
@@ -298,7 +301,6 @@ void OnDisConnected()
 
 int main()
 {
-    // 콜백 등록(// 콜백 함수 내에서는 50msec 이내 작업만 수행할 것)
     //Drfl.set_on_homming_completed(OnHommingCompleted);
     //Drfl.set_on_monitoring_data(OnMonitoringDataCB);
     //Drfl.set_on_monitoring_data_ex(OnMonitoringDataExCB);
@@ -321,20 +323,17 @@ int main()
     //Drfl.set_on_program_stopped(OnProgramStopped);
     //Drfl.set_on_disconnected(OnDisConnected);
 
-    // 연결 수립
     assert(Drfl.open_connection("192.168.137.100"));
 
-    // 버전 정보 획득
+
     SYSTEM_VERSION tSysVerion = { '\0', };
     Drfl.get_system_version(&tSysVerion);
-    // 모니터링 데이터 버전 변경
+    // 占쏙옙占쏙옙拷占� 占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙
     assert(Drfl.setup_monitoring_version(1));
     Drfl.set_robot_control(CONTROL_SERVO_ON);
     Drfl.set_digital_output(GPIO_CTRLBOX_DIGITAL_INDEX_10, TRUE);
     cout << "System version: " << tSysVerion._szController << endl;
     cout << "Library version: " << Drfl.get_library_version() << endl;
-
-    // 수동 모드 설정
 
 
     //Drfl.ConfigCreateModbus("mr1", "192.168.137.70", 552, MODBUS_REGISTER_TYPE_HOLDING_REGISTER, 3, 5);
@@ -407,7 +406,7 @@ int main()
             case EXAMPLE_GPIO:
                 cout << "reset gpio" << endl;
                 for (int i = 0; i < NUM_DIGITAL; i++) {
-                    assert(Drfl.SetCtrlBoxDigitalOutput((GPIO_CTRLBOX_DIGITAL_INDEX)i, FALSE));
+                    assert(Drfl.set_digital_output((GPIO_CTRLBOX_DIGITAL_INDEX)i, FALSE));
                 }
                 break;
             case EXAMPLE_MODBUS:
