@@ -8,8 +8,8 @@
   Copyright © 2025 Doosan Robotics Inc
 </p>
 
+# Doosan Robotics Framework Library
 
-# Build Instructions for DRFL (Doosan Robotics Framework Library)
 
 This document outlines the procedure for building the DRFL on Windows and Linux platforms. For detailed instructions, please refer to the official manual linked below:
 
